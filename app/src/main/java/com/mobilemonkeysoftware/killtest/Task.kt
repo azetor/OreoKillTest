@@ -27,8 +27,19 @@ class Task : Serializable {
 
         val logSubject: Subject<String> = PublishSubject.create()
 
+        private var runTaskMainApp = true
+        private var runTaskJobService = true
+        private var runTaskForegroundJobService = true
+        private var runTaskProcessJobService = true
+
         fun createTaskMainApp() {
-            create(TASK_MAIN_APP).subscribe(taskMainAppSubject)
+            if (runTaskMainApp) {
+                runTaskMainApp = false
+                create(TASK_MAIN_APP).subscribe(taskMainAppSubject)
+                Timber.d("Task $TASK_MAIN_APP created")
+            } else {
+                Timber.d("Task $TASK_MAIN_APP is created already")
+            }
         }
 
         private fun create(name: String): Observable<String> = Observable
@@ -48,15 +59,33 @@ class Task : Serializable {
         }
 
         fun createTaskJobService() {
-            create(TASK_JOB_SERVICE).subscribe(taskJobServiceSubject)
+            if (runTaskJobService) {
+                runTaskJobService = false
+                create(TASK_JOB_SERVICE).subscribe(taskJobServiceSubject)
+                Timber.d("Task $TASK_JOB_SERVICE created")
+            } else {
+                Timber.d("Task $TASK_JOB_SERVICE is created already")
+            }
         }
 
         fun createTaskForegroundJobService() {
-            create(TASK_FOREGROUND_JOB_SERVICE).subscribe(taskForegroundJobServiceSubject)
+            if (runTaskForegroundJobService) {
+                runTaskForegroundJobService = false
+                create(TASK_FOREGROUND_JOB_SERVICE).subscribe(taskForegroundJobServiceSubject)
+                Timber.d("Task $TASK_FOREGROUND_JOB_SERVICE created")
+            } else {
+                Timber.d("Task $TASK_FOREGROUND_JOB_SERVICE is created already")
+            }
         }
 
         fun createTaskProcessJobService() {
-            create(TASK_PROCESS_JOB_SERVICE).subscribe(taskProcessJobServiceSubject)
+            if (runTaskProcessJobService) {
+                runTaskProcessJobService = false
+                create(TASK_PROCESS_JOB_SERVICE).subscribe(taskProcessJobServiceSubject)
+                Timber.d("Task $TASK_PROCESS_JOB_SERVICE created")
+            } else {
+                Timber.d("Task $TASK_PROCESS_JOB_SERVICE is created already")
+            }
         }
     }
 
